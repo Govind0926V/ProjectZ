@@ -32,21 +32,10 @@
 
 .stat-card {
     background: white;
+    padding: 1.5rem;
     border-radius: 8px;
-    padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
-    transition: transform 0.2s;
-}
-
-.stat-card:hover {
-    transform: translateY(-5px);
-}
-
-.stat-card canvas {
-    width: 100% !important;
-    height: 200px !important;
-    margin-top: 10px;
 }
 
 .stat-card i {
@@ -567,54 +556,4 @@
 
 .complaint-actions .btn i {
     font-size: 1rem;
-}
-
-.chart-section {
-    margin: 2rem 0;
-    width: 100%;
-}
-
-.chart-card {
-    background: white;
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.chart-card h2 {
-    color: var(--text-color);
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-    text-align: center;
-}
-
-.table-responsive {
-    margin-top: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.table {
-    margin-bottom: 0;
-}
-
-.table thead th {
-    background-color: #f8f9fa;
-    border-bottom: 2px solid #dee2e6;
-    color: #495057;
-    font-weight: 600;
-}
-
-.table tbody tr:hover {
-    background-color: #f8f9fa;
-}
-
-.table td {
-    vertical-align: middle;
-}
-
-#complaintStatusChart {
-    min-height: 400px;
-    width: 100%;
 } 

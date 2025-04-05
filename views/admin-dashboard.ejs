@@ -32,34 +32,6 @@
             </div>
         </div>
 
-        <!-- Complaint Status Chart Section -->
-        <div class="chart-section">
-            <div class="chart-card">
-                <h2>Complaint Status Distribution</h2>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div id="complaintStatusChart" style="min-height: 400px;"></div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Status</th>
-                                        <th>Count</th>
-                                        <th>Percentage</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="statusTableBody">
-                                    <!-- Table content will be populated by JavaScript -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="dashboard-grid">
             <!-- Officers Section -->
             <div class="dashboard-section">
@@ -185,94 +157,6 @@
     <!-- External JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     
     <!-- Custom JavaScript -->
     <script src="/js/admin-dashboard.js"></script>
-    <script>
-        // Pass the data directly from server to client
-        window.complaintsData = <%- JSON.stringify(complaints || []) %>;
-        
-        function initializeChart() {
-            // Prepare data for the chart
-            const statusData = {};
-            let totalComplaints = 0;
-            
-            // Count complaints by status
-            window.complaintsData.forEach(complaint => {
-                const status = complaint.status || 'Unknown';
-                statusData[status] = (statusData[status] || 0) + 1;
-                totalComplaints++;
-            });
-
-            // Create chart
-            const chartOptions = {
-                series: Object.values(statusData),
-                chart: {
-                    type: 'donut',
-                    height: 350
-                },
-                labels: Object.keys(statusData),
-                colors: ['#4CAF50', '#FFC107', '#F44336', '#2196F3'],
-                legend: {
-                    position: 'bottom'
-                },
-                plotOptions: {
-                    pie: {
-                        donut: {
-                            size: '65%',
-                            labels: {
-                                show: true,
-                                total: {
-                                    show: true,
-                                    label: 'Total',
-                                    formatter: function(w) {
-                                        return totalComplaints + ' complaints';
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                dataLabels: {
-                    enabled: true,
-                    formatter: function(val) {
-                        return val.toFixed(1) + '%';
-                    }
-                }
-            };
-
-            // Render chart
-            const chart = new ApexCharts(document.querySelector("#complaintStatusChart"), chartOptions);
-            chart.render();
-
-            // Populate table
-            const tableBody = document.getElementById('statusTableBody');
-            tableBody.innerHTML = ''; // Clear existing content
-            
-            if (totalComplaints === 0) {
-                const noDataRow = document.createElement('tr');
-                noDataRow.innerHTML = '<td colspan="3" class="text-center">No complaints data available</td>';
-                tableBody.appendChild(noDataRow);
-                return;
-            }
-
-            Object.entries(statusData).forEach(([status, count]) => {
-                const percentage = ((count / totalComplaints) * 100).toFixed(1);
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${status}</td>
-                    <td>${count}</td>
-                    <td>${percentage}%</td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
-
-        // Initialize when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializeChart);
-        } else {
-            initializeChart();
-        }
-    </script>
